@@ -27,11 +27,53 @@ app.use((request, response, next) => {
     next()
 })
 
+//imports de arquivos e bibliotecas do projeto
 
-app.get('/v1/acme/filmes', async(request, response, next) => {
-    response.json(funcoes.getListaFilmes())
-    response.status(200)
+const controllerFilmes = require('./controller/controller_filme.js')
+
+// ----------------------------------------------
+
+
+app.get('/v1/acme/filmes', cors(), function(request, response, next) {
+
+    let controllerFilmes = require('./controller/funcoes.js')
+
+    let filmes = controllerFilmes.getListarFilmes()
+    if (filmes) {
+        response.json(filmes)
+        response.status(200)
+    } else {
+        response.status(404)
+    }
 })
 
+app.get('/v2/acme/filmes', cors(), async function(request, response, next) {
 
-app.listen(8080, () => {})
+    let dadosFilmes = await controllerFilmes.getListarFilmes();
+
+    if (dadosFilmes) {
+        response.json(dadosFilmes)
+        response.status(200)
+    } else {
+        response.json({ message: 'nenhum registro encontrado' })
+        response.status(404)
+    }
+})
+
+app.listen(8080, function() {
+    console.log('API Funcionando e aguardando requisições')
+})
+
+app.get('/v2/acme/filme/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idFilme = request.params.id
+
+    let dadosFilmesPorID = await controllerFilmes.getBuscarFilme(idFilme);
+    response.status(dadosFilmesPorID.status_code)
+    response.json(dadosFilmesPorID)
+})
+
+app.listen(5050, function() {
+    console.log('API Funcionando e aguardando requisições')
+})

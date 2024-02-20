@@ -1,0 +1,52 @@
+create database db_acme_filmes_turma_ab;
+
+use db_acme_filmes_turma_ab;
+
+create table tbl_filme(
+	id int not null auto_increment primary key,
+    nome varchar(80) not null,
+    sinopse text not null,
+    duracao time not null,
+    data_lancamento date not null,
+    data_relancamento date,
+    foto_capa varchar(200) not null,
+    valor_unitario float,
+    unique index (id),
+    unique key (id)
+);
+
+SHOW TABLES;
+
+desc tbl_filme;
+
+insert into tbl_filme(nome, sinopse, duracao, data_lancamento, data_relancamento, foto_capa, valor_unitario) values (
+'Efeito Borboleta',
+'Evan (Ashton Kutcher) é um jovem que luta para esquecer fatos de sua infância. Para tanto ele decide realizar uma regressão onde volta também fisicamente ao seu corpo de criança, tendo condições de alterar seu próprio passado. Porém, ao tentar consertar seus antigos problemas ele termina por criar novos, já que toda mudança que realiza gera consequências em seu futuro.',
+'01:53:00',
+'2004-07-23',
+null,
+'https://br.web.img2.acsta.net/c_310_420/pictures/13/12/18/20/56/273919.jpg',
+'34.90'
+);
+
+insert into tbl_filme(nome, sinopse, duracao, data_lancamento, data_relancamento, foto_capa, valor_unitario) values (
+'A Entidade',
+'Ellison (Ethan Hawke) é um escritor de romances policias que acaba de se mudar com a família. No sótão da nova casa ele descobre antigos rolos de filme, que trazem imagens de pessoas sendo mortas. Intrigado com o que elas representam e com um estranho símbolo presente nas imagens, ele e sua família logo passam a correr sério risco de morte. Com Vincent D´Onofrio.',
+'01:50:00',
+'2012-10-12',
+null,
+'https://br.web.img3.acsta.net/c_310_420/medias/nmedia/18/91/31/38/20277419.jpg',
+'24.90'
+);
+
+insert into tbl_filme(nome, sinopse, duracao, data_lancamento, data_relancamento, foto_capa, valor_unitario) values (
+'A Autópsia',
+'Tommy Tilden (Brian Cox) e Austin Tilden (Emile Hirsch), seu filho, são os reponsáveis por comandar o necrotério de uma pequena cidade do interior dos Estados Unidos. Os trabalhos que recebem costumam ser muito tranquilos por causa da natureza pacata da cidade, mas, certo dia, o xerife local (Michael McElhatton) traz um caso complicado: uma mulher desconhecida foi encontrada morta nos arredores da cidade - "Jane Doe", no jargão americano. Conforme pai e filho tentam descobrir a identidade da mulher morta, coisas estranhas e perigosas começam a ocorrer, colocando a vida dos dois em perigo.',
+'01:30:00',
+'2017-05-04',
+null,
+'https://br.web.img3.acsta.net/c_310_420/pictures/17/04/03/21/49/067456.jpg',
+'24.90'
+);
+
+select * from tbl_filme;
