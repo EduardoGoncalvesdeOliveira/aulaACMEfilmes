@@ -7,6 +7,14 @@
 
 var dadosFilmes = require('../model/filmes.js')
 
+const pegarIdBD = () => {
+    let scriptSql;
+
+    scriptSql = `select id from tbl_filme order by id desc limit 1;`
+
+    return scriptSql
+}
+
 const getListaFilmes = () => {
     const filmes = dadosFilmes.filmes.filmes
 
@@ -30,8 +38,7 @@ const getListaFilmes = () => {
 
 getListaFilmes()
 
-console.log(getListaFilmes())
-
 module.exports = {
-    getListaFilmes
+    getListaFilmes,
+    pegarIdBD
 }
