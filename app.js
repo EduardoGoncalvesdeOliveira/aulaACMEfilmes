@@ -67,6 +67,7 @@ app.listen(8080, function() {
     console.log('API Funcionando e aguardando requisições')
 })
 
+
 app.get('/v2/acme/filme/:id', cors(), async function(request, response, next) {
 
     // RECEBE A RRQUISIÇÃO DO ID
@@ -81,6 +82,11 @@ app.get('/v2/acme/filme/:id', cors(), async function(request, response, next) {
 // NAO ESQUECER DE COLOCAR O BODY PARSER JSON, QUE É QUEM DEFINE O FORMATO DE CHEGADA DOS DADOS
 // ESSE OBJETO FOI CRIADO NO INICIO DO PROJETO
 app.post('/v2/acmefilmes/filme/', cors(), bodyParserJSON, async function(request, response, next) {
+
+    // 
+    let contentType = request.headers['content-type']
+
+    console.log(contentType)
 
     // recebe os dados encaminhados na requisição do body (json)
     let dadosBody = request.body

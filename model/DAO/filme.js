@@ -61,7 +61,8 @@ const insertFilme = async function(dadosFilme) {
         }
 
         console.log(funcoesParaUso.pegarIdBD())
-            // executa o cript sql no banco de dados OBS: DEVEMOS USAR O COMANDO {[( EXECUTE )]} E NÃO O QUERY
+
+        // executa o cript sql no banco de dados OBS: DEVEMOS USAR O COMANDO {[( EXECUTE )]} E NÃO O QUERY
         let result = await prisma.$executeRawUnsafe(sql)
 
         // validação para verificar se o insert funcionou no banco de dados

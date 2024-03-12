@@ -13,6 +13,8 @@ const ERROR_INTERNAL_SERVER_DB = { status: false, status_code: 500, message: 'Oc
 
 const ERROR_REQUIRED_FIELDS = { status: false, status_code: 400, message: 'Existem campos obrigatórios que não foram preenchidos corretamente!' }
 
+const ERROR_CONTENT_TYPE = { status: false, status_code: 415, message: 'O tipo de mídia Content-typeda solicitação não é suportado pelo servidor!' }
+
 // MENSAGENS DE SUCESSO 
 
 const SUCESS_CREATED_ITEM = { status: true, status_code: 201, message: 'Item criado com suicidio! ;)' }
@@ -22,5 +24,6 @@ module.exports = {
     ERROR_NOT_FOUND,
     ERROR_INTERNAL_SERVER_DB,
     ERROR_REQUIRED_FIELDS,
-    SUCESS_CREATED_ITEM
+    SUCESS_CREATED_ITEM,
+    ERROR_CONTENT_TYPE
 }
