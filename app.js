@@ -91,9 +91,20 @@ app.post('/v2/acmefilmes/filme/', cors(), bodyParserJSON, async function(request
     // recebe os dados encaminhados na requisição do body (json)
     let dadosBody = request.body
 
-    let resultDados = await controllerFilmes.setInserirNovoFilme(dadosBody)
+    let resultDados = await controllerFilmes.setInserirNovoFilme(dadosBody, contentType)
 
     response.status(resultDados.status_code)
     response.json(resultDados)
 
+})
+
+
+app.delete('/v3/acme/filme/delete/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idFilme = request.params.id
+
+    let deletarFilmesPorID = await controllerFilmes.setExcluirFilme(idFilme);
+    response.status(deletarFilmesPorID.status_code)
+    response.json(deletarFilmesPorID)
 })

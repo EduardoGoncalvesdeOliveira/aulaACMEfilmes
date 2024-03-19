@@ -85,6 +85,20 @@ const updateFilme = async function(id) {
 // deletar um filme filtrando por id
 const deleteFilme = async function(id) {
 
+    try {
+
+        // sql script para deletar os filmes por id
+        let sql = `DELETE FROM tbl_filme WHERE id=${id};`
+
+        // $queryRawUnsafe(sql) --- encaminha apenas a variável
+        // $queryRaw('SELECT * FROM tbl_filme') --- encaminha o script
+
+        let rsFilmes = await prisma.$queryRawUnsafe(sql)
+
+        return rsFilmes
+    } catch (error) {
+        return false
+    }
 }
 
 // listar todos os filmes existentes na tabela

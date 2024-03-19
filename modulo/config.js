@@ -13,11 +13,15 @@ const ERROR_INTERNAL_SERVER_DB = { status: false, status_code: 500, message: 'Oc
 
 const ERROR_REQUIRED_FIELDS = { status: false, status_code: 400, message: 'Existem campos obrigatórios que não foram preenchidos corretamente!' }
 
-const ERROR_CONTENT_TYPE = { status: false, status_code: 415, message: 'O tipo de mídia Content-typeda solicitação não é suportado pelo servidor!' }
+const ERROR_CONTENT_TYPE = { status: false, status_code: 415, message: 'O tipo de mídia Content-type da solicitação não é suportado, accetable format: application/json' }
+
+const ERROR_INTERNAL_SERVER = { status: false, status_code: 500, message: 'Ocorreram erros internos na camada de negócios no servidor da API, por favor contate o adm do sistema!' }
 
 // MENSAGENS DE SUCESSO 
 
 const SUCESS_CREATED_ITEM = { status: true, status_code: 201, message: 'Item criado com suicidio! ;)' }
+
+const REQUEST_SUCCEEDED = { status: true, status_code: 200, message: 'A solicitação foi bem-sucedida.' }
 
 module.exports = {
     ERROR_INVALID_ID,
@@ -25,5 +29,7 @@ module.exports = {
     ERROR_INTERNAL_SERVER_DB,
     ERROR_REQUIRED_FIELDS,
     SUCESS_CREATED_ITEM,
-    ERROR_CONTENT_TYPE
+    ERROR_CONTENT_TYPE,
+    ERROR_INTERNAL_SERVER,
+    REQUEST_SUCCEEDED
 }
