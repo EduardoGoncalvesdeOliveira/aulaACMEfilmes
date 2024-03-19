@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "24104544-da9c-4b20-888d-d4ecaec7739b",
+		"name": "DS2AIT-B",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31231364"
+	},
+	"item": [
+		{
+			"name": "ACME FILMES",
+			"item": [
+				{
+					"name": "ListarFilmes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v2/acme/filmes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v2",
+								"acme",
+								"filmes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BuscarFilme",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v2/acme/filme/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v2",
+								"acme",
+								"filme",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InserirFilme",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"nome\": \"sucesso\",\r\n            \"sinopse\": \"post funcionando.\",\r\n            \"duracao\": \"99:00:00\",\r\n            \"data_lancamento\": \"2007-02-28\",\r\n            \"data_relancamento\": null,\r\n            \"foto_capa\": \"https://br.web.img3.acsta.net/c_310_420/pictures/17/04/03/21/49/067456.jpg\",\r\n            \"valor_unitario\": 0\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v2/acmefilmes/filme/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v2",
+								"acmefilmes",
+								"filme",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletarFilme",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v3/acme/filme/delete/333",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v3",
+								"acme",
+								"filme",
+								"delete",
+								"333"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AtualizarFilme",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
