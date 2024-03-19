@@ -104,19 +104,26 @@ const deleteFilme = async function(id) {
 // listar todos os filmes existentes na tabela
 const selectAllFilmes = async function() {
 
-    // sql script para listar todos os filmes existentes
-    let sql = 'SELECT * FROM tbl_filme ORDER BY id DESC'
+    try {
 
-    // $queryRawUnsafe(sql) --- encaminha apenas a variável
-    // $queryRaw('SELECT * FROM tbl_filme') --- encaminha o script
+        // sql script para listar todos os filmes existentes
+        let sql = 'SELECT * FROM tbl_filme ORDER BY id DESC'
 
-    let rsFilmes = await prisma.$queryRawUnsafe(sql)
 
-    // tratamento de dados para retornar dados ou false
-    if (rsFilmes.length > 0)
-        return rsFilmes
-    else
+        // $queryRawUnsafe(sql) --- encaminha apenas a variável
+        // $queryRaw('SELECT * FROM tbl_filme') --- encaminha o script
+
+        let rsFilmes = await prisma.$queryRawUnsafe(sql)
+
+        // tratamento de dados para retornar dados ou false
+        if (rsFilmes.length > 0)
+            return rsFilmes
+        else
+            return false
+    } catch (error) {
         return false
+    }
+
 
 }
 
