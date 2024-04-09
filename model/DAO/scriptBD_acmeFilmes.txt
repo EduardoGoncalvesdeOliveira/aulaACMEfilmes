@@ -1,6 +1,6 @@
-create database db_acme_filmes_turma_ab;
+create database db_acme_filmes_turma_ab_eduardoG;
 
-use db_acme_filmes_turma_ab;
+use db_acme_filmes_turma_ab_eduardoG;
 
 create table tbl_filme(
 	id int not null auto_increment primary key,
@@ -14,10 +14,6 @@ create table tbl_filme(
     unique index (id),
     unique key (id)
 );
-
-SHOW TABLES;
-
-desc tbl_filme;
 
 insert into tbl_filme(nome, sinopse, duracao, data_lancamento, data_relancamento, foto_capa, valor_unitario) values (
 'Efeito Borboleta',
@@ -49,4 +45,50 @@ null,
 '24.90'
 );
 
+-- INSERT INTO tbl_filme (
+--                 nome,
+--                 sinopse,
+--                 data_lancamento,
+--                 data_relancamento,
+--                 duracao,
+--                 foto_capa,
+--                 valor_unitario
+--                 ) values (
+--                     'Teste_Título',
+--                     'teste.',
+--                     '2007-02-28',
+--                      null,
+--                     '02:00:00',
+--                     'https://br.web.img3.acsta.net/c_310_420/pictures/17/04/03/21/49/067456.jpg',
+--                     '0'
+--             );
+
+-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create table tbl_ator(
+	id int not null auto_increment primary key,
+    nome varchar(80) not null,
+    sinopse text not null,
+    duracao time not null,
+    data_lancamento date not null,
+    data_relancamento date,
+    foto_capa varchar(200) not null,
+    valor_unitario float,
+    unique index (id),
+    unique key (id)
+);
+
+
+SHOW TABLES;
+
 select * from tbl_filme;
+
+select id from tbl_filme order by id desc limit 1;
+
+SELECT * FROM tbl_filme ORDER BY id DESC;
+
+desc tbl_filme;
+
+SELECT * FROM tbl_filme WHERE id =1;
+
+UPDATE tbl_filme SET nome="j urandir" where id = 7;
