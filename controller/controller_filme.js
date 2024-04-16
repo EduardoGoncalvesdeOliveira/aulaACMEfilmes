@@ -40,7 +40,7 @@ const setInserirNovoFilme = async function(dadosFilme, contentType) {
 
                 // validação de digitação para a data de relancamento que não é campo obrigatorio
                 if (dadosFilme.data_relancamento != null && dadosFilme.data_relancamento != undefined && dadosFilme.data_relancamento != "") {
-                    if (dadosFilme.data_relancamento.lenght != 10) {
+                    if (dadosFilme.data_relancamento.length != 10) {
                         return message.ERROR_REQUIRED_FIELDS; // 400 - campos preenchidos incorretamente
                     } else {
                         dadosValidated = true // se a data estiver com exatamnete 10 char
@@ -131,7 +131,7 @@ const getListarFilmes = async function() {
     if (dadosFilmes) {
         // montando o json para retornar para o app
         filmesJSON.filmes = dadosFilmes
-        filmesJSON.quantidade = dadosFilmes.lenght
+        filmesJSON.quantidade = dadosFilmes.length
         filmesJSON.status_code = 200
         return filmesJSON
     } else {

@@ -16,6 +16,9 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const funcoes = require('./controller/funcoes.js')
+const controllerFilmes = require('./controller/controller_filme.js')
+const controllerAtores = require('./controller/controller_ator.js')
+
 
 const app = express()
 
@@ -31,9 +34,6 @@ app.use((request, response, next) => {
 const bodyParserJSON = bodyParser.json()
 
 //imports de arquivos e bibliotecas do projeto
-
-const controllerFilmes = require('./controller/controller_filme.js')
-
 // ----------------------------------------------
 
 
@@ -49,6 +49,10 @@ app.get('/v1/acme/filmes', cors(), function(request, response, next) {
         response.status(404)
     }
 })
+
+// ------------------------------------------------------------------------------------------------
+
+// FILMES
 
 app.get('/v2/acme/filmes', cors(), async function(request, response, next) {
 
@@ -107,4 +111,36 @@ app.delete('/v3/acme/filme/delete/:id', cors(), async function(request, response
     let deletarFilmesPorID = await controllerFilmes.setExcluirFilme(idFilme);
     response.status(deletarFilmesPorID.status_code)
     response.json(deletarFilmesPorID)
+})
+
+// ------------------------------------------------------------------------------------------------
+
+// ATORES
+
+
+app.get('/v2/acme/atores', cors(), async function(request, response, next) {
+
+    let dadosAtores = await controllerAtores.getListarAtores();
+    response.status(dadosAtores.status_code)
+    response.json(dadosAtores)
+})
+
+app.get('/v2/acme/ator/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idAtor = request.params.id
+
+    let dadosAtoresPorID = await controllerAtores.getBuscarAtor(idAtor);
+    response.status(dadosAtoresPorID.status_code)
+    response.json(dadosAtoresPorID)
+})
+
+app.delete('/v3/acme/ator/delete/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idAtor = request.params.id
+
+    let deletarAtoresPorID = await controllerAtores.setExcluirAtor(idAtor);
+    response.status(deletarAtoresPorID.status_code)
+    response.json(deletarAtoresPorID)
 })
