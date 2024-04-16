@@ -84,7 +84,7 @@ app.get('/v2/acme/filme/:id', cors(), async function(request, response, next) {
     response.json(dadosFilmesPorID)
 })
 
-// endpint par ainserir novos filmes do banco de dados
+// endpoint par ainserir novos filmes do banco de dados
 // NAO ESQUECER DE COLOCAR O BODY PARSER JSON, QUE É QUEM DEFINE O FORMATO DE CHEGADA DOS DADOS
 // ESSE OBJETO FOI CRIADO NO INICIO DO PROJETO
 app.post('/v2/acmefilmes/filme/', cors(), bodyParserJSON, async function(request, response, next) {
