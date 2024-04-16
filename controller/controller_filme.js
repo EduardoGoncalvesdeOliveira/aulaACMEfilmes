@@ -14,7 +14,6 @@ const message = require('../modulo/config.js')
 // funcao para inserir um novo filme do banco de dados
 const setInserirNovoFilme = async function(dadosFilme, contentType) {
 
-
     try {
 
 

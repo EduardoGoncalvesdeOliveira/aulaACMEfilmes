@@ -18,6 +18,8 @@ const bodyParser = require('body-parser')
 const funcoes = require('./controller/funcoes.js')
 const controllerFilmes = require('./controller/controller_filme.js')
 const controllerAtores = require('./controller/controller_ator.js')
+const controllerGeneros = require('./controller/controller_genero.js')
+
 
 
 const app = express()
@@ -143,4 +145,69 @@ app.delete('/v3/acme/ator/delete/:id', cors(), async function(request, response,
     let deletarAtoresPorID = await controllerAtores.setExcluirAtor(idAtor);
     response.status(deletarAtoresPorID.status_code)
     response.json(deletarAtoresPorID)
+})
+
+app.post('/v2/acmefilmes/ator/', cors(), bodyParserJSON, async function(request, response, next) {
+
+    // 
+    let contentType = request.headers['content-type']
+
+    console.log(contentType)
+
+    // recebe os dados encaminhados na requisição do body (json)
+    let dadosBody = request.body
+
+    let resultDados = await controllerAtores.setInserirNovoAtor(dadosBody, contentType)
+
+    response.status(resultDados.status_code)
+    response.json(resultDados)
+
+})
+
+// ------------------------------------------------------------------------------------------------
+
+// GENEROS
+
+app.get('/v2/acme/generos', cors(), async function(request, response, next) {
+
+    let dadosGeneros = await controllerGeneros.getListarGeneros();
+    response.status(dadosGeneros.status_code)
+    response.json(dadosGeneros)
+})
+
+app.get('/v2/acme/genero/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idGenero = request.params.id
+
+    let dadosGenerosPorID = await controllerGeneros.getBuscarGenero(idGenero);
+    response.status(dadosGenerosPorID.status_code)
+    response.json(dadosGenerosPorID)
+})
+
+app.delete('/v3/acme/genero/delete/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idGenero = request.params.id
+
+    let deletarGenerosPorID = await controllerGeneros.setExcluirGenero(idGenero);
+    response.status(deletarGenerosPorID.status_code)
+    response.json(deletarGenerosPorID)
+})
+
+app.post('/v2/acmefilmes/generos/', cors(), bodyParserJSON, async function(request, response, next) {
+
+    // 
+    let contentType = request.headers['content-type']
+
+    console.log(contentType)
+
+    // recebe os dados encaminhados na requisição do body (json)
+    let dadosBody = request.body
+
+    let resultDados = await controllerGeneros.setInserirNovoGenero(dadosBody, contentType)
+
+    response.status(resultDados.status_code)
+    response.json(resultDados)
+
 })

@@ -29,7 +29,7 @@ const selectAllAtores = async function() {
     }
 }
 
-const insertAtor = async function(id) {
+const insertAtor = async function(dadosFilme) {
 
 }
 
