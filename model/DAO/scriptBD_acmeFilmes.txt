@@ -66,18 +66,169 @@ null,
 -- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 create table tbl_ator(
-	id int not null auto_increment primary key,
+	id_atores int not null auto_increment primary key,
     nome varchar(80) not null,
-    sinopse text not null,
-    duracao time not null,
-    data_lancamento date not null,
-    data_relancamento date,
-    foto_capa varchar(200) not null,
-    valor_unitario float,
-    unique index (id),
-    unique key (id)
+    nome_artistico varchar(255),
+    data_nascimento date not null,
+    data_falescimento date,
+    foto_ator text,
+    biografia varchar(255)
 );
 
+insert into tbl_ator(
+nome, 
+nome_artistico, 
+data_nascimento, 
+data_falescimento, 
+foto_ator, 
+biografia) values 
+(
+'Ator 1',
+'Antonio I',
+'1982-05-04',
+null,
+null,
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+);
+
+insert into tbl_ator(
+nome, 
+nome_artistico, 
+data_nascimento, 
+data_falescimento, 
+foto_ator, 
+biografia) values 
+(
+'Ator 2',
+'Antonio II',
+'2000-12-29',
+null,
+null,
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+);
+
+insert into tbl_ator(
+nome, 
+nome_artistico, 
+data_nascimento, 
+data_falescimento, 
+foto_ator, 
+biografia) values 
+(
+'Ator 3',
+'Antonio III',
+'1549-07-14',
+'2004-1-23',
+null,
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+);
+
+insert into tbl_ator(
+nome, 
+nome_artistico, 
+data_nascimento, 
+data_falescimento, 
+foto_ator, 
+biografia) values 
+(
+'Ator 4',
+'Antonio IV',
+'1900-02-24',
+'2004-01-23',
+'https://www.google.com/url?sa=i&url=https%3A%2F%2Faventurasnahistoria.uol.com.br%2Fnoticias%2Freportagem%2Fconheca-tothmea-mumia-egipcia-que-esta-no-brasil.phtml&psig=AOvVaw0NMYDRIm5_Tb0j-89Y6WQb&ust=1713356899107000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCODV6vvdxoUDFQAAAAAdAAAAABAE',
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+);
+
+-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create table tbl_genero(
+	id_generos int not null auto_increment primary key,
+    nome varchar(45) not null
+);
+
+insert into tbl_genero(
+nome) values 
+(
+'INFANTIL'
+);
+
+-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create table tbl_classificacao(
+	id_classificacao int not null auto_increment primary key,
+    nome varchar(255) not null,
+    codigo varchar(45) not null,
+    descricao varchar(255) not null,
+    foto_classificacao text not null
+);
+
+insert into tbl_classificacao(
+nome,
+codigo, 
+descricao,
+foto_classificacao
+) values 
+(
+'LIVRE',
+'L',
+'Livre para todas as idades',
+'https://upload.wikimedia.org/wikipedia/commons/c/c9/Classind_AL.svg'
+);
+
+insert into tbl_classificacao(
+nome,
+codigo, 
+descricao,
+foto_classificacao
+) values 
+(
+'10+',
+'A010',
+'Não recomendado para menores de 10 (dez) anos',
+'https://upload.wikimedia.org/wikipedia/commons/e/e9/Classind_A10.svg'
+);
+
+insert into tbl_classificacao(
+nome,
+codigo, 
+descricao,
+foto_classificacao
+) values 
+(
+'teste6',
+' T E S T E 6 ',
+'linha de dado dedicado a testes',
+'https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png'
+);
+
+-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create table tbl_nacionalidade(
+	id_nacionalidades int not null auto_increment primary key,
+    nome varchar(255) not null
+);
+
+insert into tbl_nacionalidade(
+nome
+) values 
+(
+'Japonês'
+);
+
+create table tbl_sexo(
+	id_sexos int not null auto_increment primary key,
+    nome varchar(10) not null,
+    sigla varchar(1) not null
+);
+
+insert into tbl_sexo(
+nome,
+sigla
+) values 
+(
+'Masculino',
+'M'
+);
 
 SHOW TABLES;
 
@@ -87,8 +238,22 @@ select id from tbl_filme order by id desc limit 1;
 
 SELECT * FROM tbl_filme ORDER BY id DESC;
 
+SELECT * FROM tbl_ator ORDER BY id_atores DESC;
+
+SELECT * FROM tbl_genero ORDER BY id_generos DESC;
+
+SELECT * FROM tbl_classificacao ORDER BY id_classificacao DESC;
+
 desc tbl_filme;
+
+desc tbl_ator;
 
 SELECT * FROM tbl_filme WHERE id =1;
 
 UPDATE tbl_filme SET nome="j urandir" where id = 7;
+
+SELECT * FROM tbl_ator ORDER BY id_atores;
+
+DELETE FROM tbl_classificacao WHERE id_classificacao=13;
+
+SELECT * FROM tbl_nacionalidade;
