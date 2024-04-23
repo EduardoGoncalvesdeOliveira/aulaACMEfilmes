@@ -18,7 +18,8 @@ const bodyParser = require('body-parser')
 const funcoes = require('./controller/funcoes.js')
 const controllerFilmes = require('./controller/controller_filme.js')
 const controllerAtores = require('./controller/controller_ator.js')
-const controllerGeneros = require('./controller/controller_genero.js')
+const controller_genero = require('./controller/controller_genero.js')
+const controllerClassificacao = require('./controller/controller_classificacao.js')
 
 
 
@@ -170,7 +171,7 @@ app.post('/v2/acmefilmes/ator/', cors(), bodyParserJSON, async function(request,
 
 app.get('/v2/acme/generos', cors(), async function(request, response, next) {
 
-    let dadosGeneros = await controllerGeneros.getListarGeneros();
+    let dadosGeneros = await controller_genero.getListarGeneros();
     response.status(dadosGeneros.status_code)
     response.json(dadosGeneros)
 })
@@ -180,7 +181,7 @@ app.get('/v2/acme/genero/:id', cors(), async function(request, response, next) {
     // RECEBE A RRQUISIÇÃO DO ID
     let idGenero = request.params.id
 
-    let dadosGenerosPorID = await controllerGeneros.getBuscarGenero(idGenero);
+    let dadosGenerosPorID = await controller_genero.getBuscarGenero(idGenero);
     response.status(dadosGenerosPorID.status_code)
     response.json(dadosGenerosPorID)
 })
@@ -190,7 +191,7 @@ app.delete('/v3/acme/genero/delete/:id', cors(), async function(request, respons
     // RECEBE A RRQUISIÇÃO DO ID
     let idGenero = request.params.id
 
-    let deletarGenerosPorID = await controllerGeneros.setExcluirGenero(idGenero);
+    let deletarGenerosPorID = await controller_genero.setExcluirGenero(idGenero);
     response.status(deletarGenerosPorID.status_code)
     response.json(deletarGenerosPorID)
 })
@@ -205,9 +206,30 @@ app.post('/v2/acmefilmes/generos/', cors(), bodyParserJSON, async function(reque
     // recebe os dados encaminhados na requisição do body (json)
     let dadosBody = request.body
 
-    let resultDados = await controllerGeneros.setInserirNovoGenero(dadosBody, contentType)
+    let resultDados = await controller_genero.setInserirNovoGenero(dadosBody, contentType)
 
     response.status(resultDados.status_code)
     response.json(resultDados)
 
+})
+
+// ------------------------------------------------------------------------------------------------
+
+// CLASSIFICACAO
+
+app.get('/v2/acme/classificacao', cors(), async function(request, response, next) {
+
+    let dadosClassificacao = await controllerClassificacao.getListarClassificacoes();
+    response.status(dadosClassificacao.status_code)
+    response.json(dadosClassificacao)
+})
+
+app.get('/v2/acme/classificacao/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idClassificacao = request.params.id
+
+    let dadosClassificacaoporID = await controllerClassificacao.getBuscarClassificacao(idClassificacao);
+    response.status(dadosClassificacaoporID.status_code)
+    response.json(dadosClassificacaoporID)
 })
