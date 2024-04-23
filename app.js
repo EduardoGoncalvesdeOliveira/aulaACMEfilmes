@@ -233,3 +233,54 @@ app.get('/v2/acme/classificacao/:id', cors(), async function(request, response, 
     response.status(dadosClassificacaoporID.status_code)
     response.json(dadosClassificacaoporID)
 })
+
+app.delete('/v3/acme/classificacao/delete/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idClassificacao = request.params.id
+
+    console.log(idClassificacao)
+
+    let deletarClassificacaoPorID = await controllerClassificacao.setExcluirClassificacao(idClassificacao);
+    response.status(deletarClassificacaoPorID.status_code)
+    response.json(deletarClassificacaoPorID)
+})
+
+
+app.post('/v2/acmefilmes/classificacao/', cors(), bodyParserJSON, async function(request, response, next) {
+
+    // 
+    let contentType = request.headers['content-type']
+
+    console.log(contentType)
+
+    // recebe os dados encaminhados na requisição do body (json)
+    let dadosBody = request.body
+
+    let resultDados = await controllerClassificacao.setInserirNovaClassificacao(dadosBody, contentType)
+
+    response.status(resultDados.status_code)
+    response.json(resultDados)
+
+})
+
+// ------------------------------------------------------------------------------------------------
+
+// NACIONALIDADE
+
+app.get('/v2/acme/nacionalidade', cors(), async function(request, response, next) {
+
+    let dadosNacionalidade = await controllerClassificacao.getListarClassificacoes();
+    response.status(dadosNacionalidade.status_code)
+    response.json(dadosNacionalidade)
+})
+
+app.get('/v2/acme/classificacao/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idNacionalidade = request.params.id
+
+    let dadosNacionalidadeporID = await controllerClassificacao.getBuscarClassificacao(idNacionalidade);
+    response.status(dadosNacionalidadeporID.status_code)
+    response.json(dadosNacionalidadeporID)
+})

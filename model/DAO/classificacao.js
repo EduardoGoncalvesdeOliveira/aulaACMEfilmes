@@ -24,16 +24,59 @@ const selectAllClassificacoes = async function(dadosFilme) {
 
 }
 
-const insertClassificacao = async function(dadosFilme) {
+const insertClassificacao = async function(dadosClassificacao) {
 
+    // script sql para inserir no banco de dados
+    try {
+
+        let sql = `insert into tbl_classificacao(
+            nome,
+            codigo, 
+            descricao,
+            foto_classificacao
+            ) values 
+            (
+                    '${dadosClassificacao.nome}', 
+                    '${dadosClassificacao.codigo}',
+                    '${dadosClassificacao.descricao}', 
+                    '${dadosClassificacao.foto_classificacao}'
+            )`
+
+        // executa o cript sql no banco de dados OBS: DEVEMOS USAR O COMANDO {[( EXECUTE )]} E NÃO O QUERY
+        let result = await prisma.$executeRawUnsafe(sql)
+
+        // validação para verificar se o insert funcionou no banco de dados
+        if (result)
+            return true
+        else
+            return false
+
+
+    } catch (error) {
+        return false
+    }
 }
 
 const updateClassificacao = async function(dadosFilme) {
 
 }
 
-const deleteClassificacao = async function(dadosFilme) {
+const deleteClassificacao = async function(id) {
 
+    try {
+
+        // sql script para deletar os filmes por id
+        let sql = `DELETE FROM tbl_classificacao WHERE id_classificacao=${id}`
+
+        // $queryRawUnsafe(sql) --- encaminha apenas a variável
+        // $queryRaw('SELECT * FROM tbl_filme') --- encaminha o script
+
+        let rsClassificacao = await prisma.$queryRawUnsafe(sql)
+
+        return rsClassificacao
+    } catch (error) {
+        return false
+    }
 }
 
 const selectByIdClassificacao = async function(id) {
