@@ -95,8 +95,24 @@ const insertGenero = async function(dadosGenero) {
     }
 }
 
-const updateGenero = async function(id) {
+const updateGenero = async function(id, dadoAtualizado) {
+    try {
+        let sql = `update tbl_genero set 
+            nome = "${dadoAtualizado.nome}",
+            where
+            id_generos = ${id}`
 
+        console.log(sql)
+        let result = await prisma.$executeRawUnsafe(sql)
+
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
 }
 
 module.exports = {

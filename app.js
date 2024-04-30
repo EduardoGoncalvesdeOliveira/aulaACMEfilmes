@@ -105,6 +105,16 @@ app.post('/v2/acmefilmes/filme/', cors(), bodyParserJSON, async function(request
 
 })
 
+app.put('/v2/acmeFilmes/filme/:id', cors(), bodyParserJSON, async function(request, response) {
+    let contentType = request.headers['content-type']
+    let dadosBody = request.body
+    let idFilme = request.params.id
+
+    let dadosFilme = await controllerFilmes.setAtualizarFilme(idFilme, dadosBody, contentType)
+
+    response.status(dadosFilme.status_code)
+    response.json(dadosFilme)
+})
 
 app.delete('/v3/acme/filme/delete/:id', cors(), async function(request, response, next) {
 
@@ -262,6 +272,17 @@ app.post('/v2/acmefilmes/classificacao/', cors(), bodyParserJSON, async function
     response.status(resultDados.status_code)
     response.json(resultDados)
 
+})
+
+app.put('/v2/acmeFilmes/genero/:id', cors(), bodyParserJSON, async function(request, response) {
+    let contentType = request.headers['content-type']
+    let dadosBody = request.body
+    let idGenero = request.params.id
+
+    let dadosGenero = await controller_genero.setAtualizarGenero(idGenero, dadosBody, contentType)
+
+    response.status(dadosGenero.status_code)
+    response.json(dadosGenero)
 })
 
 // ------------------------------------------------------------------------------------------------

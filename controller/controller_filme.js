@@ -78,8 +78,84 @@ const setInserirNovoFilme = async function(dadosFilme, contentType) {
 }
 
 // funcao para atualizar um filme do banco de dados
-const setAtualizarFilme = async function() {
+const setAtualizarFilme = async function(idFilme, dadoAtualizado, contentType) {
+    try {
 
+        // Validação de content-type (apenas aplication/json)
+        if (String(contentType).toLowerCase() == 'application/json') {
+            let dadosID = filmesDAO.selectByIdFilme()
+
+            if (idFilme == '' || idFilme == undefined || idFilme == isNaN(idFilme) || idFilme == null) {
+                return message.ERROR_INVALID_ID
+            } else if (idFilme > dadosID.length) {
+                return message.ERROR_NOT_FOUND
+            } else {
+                // Cria o objeto JSON para devolver os dados criados na requisição
+                let atualizarFilmeJSON = {}
+
+                //Validação de campos obrigatórios ou com digitação inválida
+                if (dadoAtualizado.nome == '' || dadoAtualizado.nome == undefined || dadoAtualizado.nome == null || dadoAtualizado.nome.length > 80 ||
+                    dadoAtualizado.sinopse == '' || dadoAtualizado.sinopse == undefined || dadoAtualizado.sinopse == null || dadoAtualizado.sinopse.length > 65000 ||
+                    dadoAtualizado.duracao == '' || dadoAtualizado.duracao == undefined || dadoAtualizado.duracao == null || dadoAtualizado.duracao.length > 8 ||
+                    dadoAtualizado.data_lancamento == '' || dadoAtualizado.data_lancamento == undefined || dadoAtualizado.data_lancamento == null || dadoAtualizado.data_lancamento.length != 10 ||
+                    dadoAtualizado.foto_capa == '' || dadoAtualizado.foto_capa == undefined || dadoAtualizado.foto_capa == null || dadoAtualizado.foto_capa.length > 200 ||
+                    dadoAtualizado.valor_unitario.length > 6
+                ) {
+                    return message.ERROR_REQUIRED_FIELDS
+                } else {
+                    let validateStatus = false
+
+                    // Outra validação com campos obrigatorios ou com digitação inválida
+                    if (dadoAtualizado.data_relancamento != null &&
+                        dadoAtualizado.data_relancamento != '' &&
+                        dadoAtualizado.data_relancamento != undefined) {
+
+                        if (dadoAtualizado.data_relancamento.length != 10) {
+                            return message.ERROR_REQUIRED_FIELDS //400
+                        } else {
+                            validateStatus = true
+                        }
+                    } else {
+
+                        validateStatus = true
+                    }
+
+                    // Validação para verificar se a variavel booleana é verdadeira
+                    if (validateStatus) {
+
+                        // Encaminha os dados do filme para o DAO inserir no DB
+                        let dadosFilme = await filmesDAO.updateFilme(idFilme, dadoAtualizado)
+
+                        // if(atualizarFilme){
+                        //     let idFilmes = await filmesDAO.IDFilme()
+                        //     console.log(idFilmes)
+                        //     dadoAtualizado.id = Number(idFilmes[0].id)
+                        // }
+
+                        // Validação para verificar se o DAO inseriu os dados do DB
+                        if (dadosFilme) {
+
+                            //Cria o JSON de retorno dos dados (201)
+                            atualizarFilmeJSON.filme = dadosFilme
+                            atualizarFilmeJSON.status = message.SUCCESS_UPDATED_ITEM.status
+                            atualizarFilmeJSON.status_code = message.SUCCESS_UPDATED_ITEM.status_code
+                            atualizarFilmeJSON.message = message.SUCCESS_UPDATED_ITEM.message
+                            return atualizarFilmeJSON //201
+
+                        } else {
+                            return message.ERROR_INTERNAL_SERVER_DB //500
+                        }
+                    } else {
+                        validateStatus = false
+                    }
+                }
+            }
+        } else {
+            return message.ERROR_CONTENT_TYPE //415
+        }
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER //500 - erro na controller
+    }
 }
 
 // funcao para excluir um filme do banco de dados

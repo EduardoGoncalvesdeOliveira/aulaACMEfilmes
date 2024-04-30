@@ -19,6 +19,8 @@ const ERROR_INTERNAL_SERVER = { status: false, status_code: 500, message: 'Ocorr
 
 // MENSAGENS DE SUCESSO 
 
+const SUCCESS_UPDATED_ITEM = { status: true, status_code: 200, message: 'Item atualizado com sucesso' }
+
 const SUCESS_CREATED_ITEM = { status: true, status_code: 201, message: 'Item criado com suicidio! ;)' }
 
 const REQUEST_SUCCEEDED = { status: true, status_code: 200, message: 'A solicitação foi bem-sucedida.' }
@@ -30,6 +32,7 @@ module.exports = {
     ERROR_REQUIRED_FIELDS,
     SUCESS_CREATED_ITEM,
     ERROR_CONTENT_TYPE,
+    SUCCESS_UPDATED_ITEM,
     ERROR_INTERNAL_SERVER,
     REQUEST_SUCCEEDED
 }

@@ -141,12 +141,73 @@ const setInserirNovoGenero = async function(dadosGenero, contentType) {
     }
 }
 
+const setAtualizarGenero = async function(idGenero, dadoAtualizado, contentType) {
+    try {
+
+        // Validação de content-type (apenas aplication/json)
+        if (String(contentType).toLowerCase() == 'application/json') {
+            let dadosID = generosDAO.setAtualizarGenero()
+
+            if (idGenero == '' || idGenero == undefined || idGenero == isNaN(idGenero) || idGenero == null) {
+                return message.ERROR_INVALID_ID
+            } else if (idGenero > dadosID.length) {
+                return message.ERROR_NOT_FOUND
+            } else {
+                // Cria o objeto JSON para devolver os dados criados na requisição
+                let atualizarGeneroJSON = {}
+
+                //Validação de campos obrigatórios ou com digitação inválida
+                if (dadoAtualizado.nome == '' || dadoAtualizado.nome == undefined || dadoAtualizado.nome == null || dadoAtualizado.nome.length > 80) {
+                    return message.ERROR_REQUIRED_FIELDS
+                } else {
+                    let validateStatus = true
+
+                    // Outra validação com campos obrigatorios ou com digitação inválida
+
+                    // Validação para verificar se a variavel booleana é verdadeira
+                    if (validateStatus) {
+
+                        // Encaminha os dados do filme para o DAO inserir no DB
+                        let dadosGenero = await generosDAO.updateGenero(idGenero, dadoAtualizado)
+
+                        // if(atualizarFilme){
+                        //     let idFilmes = await filmesDAO.IDFilme()
+                        //     console.log(idFilmes)
+                        //     dadoAtualizado.id = Number(idFilmes[0].id)
+                        // }
+
+                        // Validação para verificar se o DAO inseriu os dados do DB
+                        if (dadosGenero) {
+
+                            //Cria o JSON de retorno dos dados (201)
+                            atualizarGeneroJSON.genero = dadosGenero
+                            atualizarGeneroJSON.status = message.SUCCESS_UPDATED_ITEM.status
+                            atualizarGeneroJSON.status_code = message.SUCCESS_UPDATED_ITEM.status_code
+                            atualizarGeneroJSON.message = message.SUCCESS_UPDATED_ITEM.message
+                            return atualizarGeneroJSON //201
+
+                        } else {
+                            return message.ERROR_INTERNAL_SERVER_DB //500
+                        }
+                    } else {
+                        validateStatus = false
+                    }
+                }
+            }
+        } else {
+            return message.ERROR_CONTENT_TYPE //415
+        }
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER //500 - erro na controller
+    }
+}
+
 
 module.exports = {
 
     getListarGeneros,
 
-    // setAtualizarGenero,
+    setAtualizarGenero,
     setInserirNovoGenero,
     setExcluirGenero,
     getBuscarGenero,

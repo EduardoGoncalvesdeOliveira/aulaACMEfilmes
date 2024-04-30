@@ -72,9 +72,7 @@ const getBuscarClassificacao = async function(id) {
 
 }
 
-const setAtualizarClassificacao = async function() {
-
-}
+const setAtualizarClassificacao = async function(idClassificacao, dadoAtualizado, contentType) {}
 
 const setInserirNovaClassificacao = async function(dadosClassificacao, contentType) {
 
