@@ -4,34 +4,37 @@
 // Versao: 1.0.4.24
 
 // import da biblioteca do Prisma Client
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require('@prisma/client')
 
 // istanciando o objeto prisma com as caracterisyicas do prisma client
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 // listar todos os filmes existentes na tabela
-const selectAllAtores = async function() {
+const selectAllDiretores = async function() {
+
     try {
+
         // sql script para listar todos os filmes existentes
-        let sql = "SELECT * FROM tbl_ator ORDER BY id_atores DESC";
+        let sql = 'SELECT * FROM tbl_diretor ORDER BY id_diretores DESC'
 
         // $queryRawUnsafe(sql) --- encaminha apenas a variável
         // $queryRaw('SELECT * FROM tbl_filme') --- encaminha o script
 
-        let rsAtores = await prisma.$queryRawUnsafe(sql);
+        let rsAtores = await prisma.$queryRawUnsafe(sql)
 
-        return rsAtores;
+        return rsAtores
+
     } catch (error) {
-        return false;
+        return false
     }
-};
+}
 
-const insertAtor = async function(dadosAtor) {
+const insertDiretor = async function(dadosDiretor) {
     // script sql para inserir no banco de dados
     try {
         let sql;
 
-        if (dadosAtor.data_falescimento == null) {
+        if (dadosDiretor.data_falescimento == null) {
             sql = `INSERT INTO tbl_ator (
                     nome,
                     nome_artistico,
@@ -40,12 +43,12 @@ const insertAtor = async function(dadosAtor) {
                     foto_ator,
                     biografia
                     ) values (
-                        '${dadosAtor.nome}', 
-                        '${dadosAtor.nome_artistico}',
-                        '${dadosAtor.data_nascimento}',
+                        '${dadosDiretor.nome}', 
+                        '${dadosDiretor.nome_artistico}',
+                        '${dadosDiretor.data_nascimento}',
                          null,                
-                         '${dadosAtor.foto_ator}',
-                         '${dadosAtor.biografia}'
+                         '${dadosDiretor.foto_ator}',
+                         '${dadosDiretor.biografia}'
                 )`;
         } else {
             sql = `INSERT INTO tbl_ator (
@@ -56,12 +59,12 @@ const insertAtor = async function(dadosAtor) {
                     foto_ator,
                     biografia
             ) values (
-                '${dadosAtor.nome}',
-                        '${dadosAtor.nome_artistico}',
-                        '${dadosAtor.data_nascimento}'
-                        '${dadosAtor.data_falescimento}'
-                        '${dadosAtor.foto_ator}', 
-                        '${dadosAtor.biografia}'
+                '${dadosDiretor.nome}',
+                        '${dadosDiretor.nome_artistico}',
+                        '${dadosDiretor.data_nascimento}'
+                        '${dadosDiretor.data_falescimento}'
+                        '${dadosDiretor.foto_ator}', 
+                        '${dadosDiretor.biografia}'
         )`;
         }
 
@@ -79,45 +82,52 @@ const insertAtor = async function(dadosAtor) {
     }
 };
 
-const updateAtor = async function(id) {};
 
-const deleteAtor = async function(id) {
+const updateDiretor = async function(id) {
+
+}
+
+const deleteDiretor = async function(id) {
+
     try {
+
         // sql script para deletar os filmes por id
-        let sql = `DELETE FROM tbl_ator WHERE id_atores=${id};`;
+        let sql = `DELETE FROM tbl_diretor WHERE id_diretores=${id};`
 
         // $queryRawUnsafe(sql) --- encaminha apenas a variável
         // $queryRaw('SELECT * FROM tbl_filme') --- encaminha o script
 
-        let rsAtores = await prisma.$queryRawUnsafe(sql);
+        let rsAtores = await prisma.$queryRawUnsafe(sql)
 
-        return rsAtores;
+        return rsAtores
     } catch (error) {
-        return false;
+        return false
     }
-};
+}
 
-const selectByIdAtor = async function(id) {
+const selectByIdDiretor = async function(id) {
+
     try {
+
         // sql script para listar os filmes por id
-        let sql = `SELECT * FROM tbl_ator WHERE id_atores =${id}`;
+        let sql = `SELECT * FROM tbl_diretor WHERE id_diretores =${id}`
 
         // $queryRawUnsafe(sql) --- encaminha apenas a variável
         // $queryRaw('SELECT * FROM tbl_filme') --- encaminha o script
 
-        let rsAtor = await prisma.$queryRawUnsafe(sql);
+        let rsAtor = await prisma.$queryRawUnsafe(sql)
 
-        return rsAtor;
+        return rsAtor
     } catch (error) {
-        return false;
+        return false
     }
-};
+}
 
 module.exports = {
-    selectAllAtores,
+    selectAllDiretores,
 
-    insertAtor,
-    updateAtor,
-    deleteAtor,
-    selectByIdAtor,
-};
+    insertDiretor,
+    updateDiretor,
+    deleteDiretor,
+    selectByIdDiretor
+}

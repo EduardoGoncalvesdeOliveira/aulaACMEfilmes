@@ -10,30 +10,30 @@ const { filmes } = require("../model/filmes")
 var funcoesParaUso = require('./funcoes.js')
 
 // import do arq DAO para manipular dados do banco de dados
-const atoresDAO = require('../model/DAO/ator.js')
+const diretoresDAO = require('../model/DAO/diretor.js')
 
 // import do arquivo de configuração do projeto
 const message = require('../modulo/config.js')
 
 // funcao para retornar todos os filmes do banco de dados
-const getListarAtores = async function() {
+const getListarDiretor = async function() {
 
     try {
 
         // chama a função do dao para retornar dados no bd
-        let dadosAtores = await atoresDAO.selectAllAtores()
+        let dadosDiretores = await diretoresDAO.selectAllDiretores()
 
-        let atoresJSON = {}
+        let diretorJSON = {}
 
         // verifica se existem dados
-        if (dadosAtores) {
+        if (dadosDiretores) {
 
-            if (dadosAtores.length > 0) {
+            if (dadosDiretores.length > 0) {
                 // montando o json para retornar para o app
-                atoresJSON.atores = dadosAtores
-                atoresJSON.quantidade = dadosAtores.length
-                atoresJSON.status_code = 200
-                return atoresJSON
+                diretorJSON.diretores = dadosDiretores
+                diretorJSON.quantidade = dadosDiretores.length
+                diretorJSON.status_code = 200
+                return diretorJSON
             } else {
                 return message.ERROR_NOT_FOUND
             }
@@ -45,7 +45,7 @@ const getListarAtores = async function() {
     }
 }
 
-const setInserirNovoAtor = async function(dadosAtor, contentType) {
+const setInserirNovoDiretor = async function(dadosDiretor, contentType) {
 
     try {
 
@@ -54,14 +54,15 @@ const setInserirNovoAtor = async function(dadosAtor, contentType) {
         if (String(contentType).toLowerCase() == 'application/json') {
 
             // cia a variavel json
-            let resultDadosAtor = {}
+            let resultDadosDiretor = {}
 
             // validação de dados
-            if (dadosAtor.nome == '' || dadosAtor.nome == undefined || dadosAtor.nome.length > 80 ||
-                dadosAtor.nome_artistico == '' || dadosAtor.nome_artistico == undefined || dadosAtor.nome_artistico.length > 80 ||
-                dadosAtor.data_nascimento == '' || dadosAtor.data_nascimento == undefined || dadosAtor.data_nascimento.length > 10 ||
-                dadosAtor.foto_ator == '' || dadosAtor.foto_ator == undefined || dadosAtor.foto_ator == null ||
-                dadosAtor.biografia == '' || dadosAtor.biografia == undefined || dadosAtor.biografia.length > 255) {
+            if (dadosFilme.nome == '' || dadosFilme.nome == undefined || dadosFilme.nome.length > 80 ||
+                dadosFilme.sinopse == '' || dadosFilme.sinopse == undefined || dadosFilme.sinopse.length > 65000 ||
+                dadosFilme.duracao == '' || dadosFilme.duracao == undefined || dadosFilme.duracao.length > 10 ||
+                dadosFilme.data_lancamento == '' || dadosFilme.data_lancamento == undefined || dadosFilme.data_lancamento.length > 10 ||
+                dadosFilme.foto_capa == '' || dadosFilme.foto_capa == undefined || dadosFilme.foto_capa.length > 200 ||
+                dadosFilme.valor_unitario.length > 8) {
 
                 return message.ERROR_REQUIRED_FIELDS
             } else {
@@ -70,8 +71,8 @@ const setInserirNovoAtor = async function(dadosAtor, contentType) {
                 let dadosValidated = false
 
                 // validação de digitação para a data de relancamento que não é campo obrigatorio
-                if (dadosAtor.data_falescimento != null && dadosAtor.data_falescimento != undefined && dadosAtor.data_falescimento != "") {
-                    if (dadosAtor.data_falescimento.length != 10) {
+                if (dadosFilme.data_relancamento != null && dadosFilme.data_relancamento != undefined && dadosFilme.data_relancamento != "") {
+                    if (dadosFilme.data_relancamento.length != 10) {
                         return message.ERROR_REQUIRED_FIELDS; // 400 - campos preenchidos incorretamente
                     } else {
                         dadosValidated = true // se a data estiver com exatamnete 10 char
@@ -84,18 +85,18 @@ const setInserirNovoAtor = async function(dadosAtor, contentType) {
                 if (dadosValidated) {
 
                     // encaminha dados para o dao inserir no banco de dados
-                    let novoFilme = await atoresDAO.insertAtor(dadosAtor)
+                    let novoFilme = await filmesDAO.insertFilme(dadosFilme)
 
                     // validação dos dados sendo nseridos pelo dao no banco de dados
                     if (novoFilme) {
 
                         // cria o padrão json ´para o retoro dos dados criados
-                        resultDadosAtor.status = message.SUCESS_CREATED_ITEM.status
-                        resultDadosAtor.status_code = message.SUCESS_CREATED_ITEM.status_code
-                        resultDadosAtor.message = message.SUCESS_CREATED_ITEM.message
-                        resultDadosAtor.ator = dadosAtor
+                        resultDadosDiretor.status = message.SUCESS_CREATED_ITEM.status
+                        resultDadosDiretor.status_code = message.SUCESS_CREATED_ITEM.status_code
+                        resultDadosDiretor.message = message.SUCESS_CREATED_ITEM.message
+                        resultDadosDiretor.filme = dadosFilme
 
-                        return resultDadosAtor // 201 
+                        return resultDadosDiretor // 201 
                     } else {
                         return message.ERROR_INTERNAL_SERVER_DB // 500 erro na camada do DAO
                     }
@@ -109,23 +110,23 @@ const setInserirNovoAtor = async function(dadosAtor, contentType) {
     }
 }
 
-const setAtualizarAtor = async function() {
+const setAtualizarDiretor = async function() {
 
 }
 
-const setExcluirAtor = async function(id) {
+const setExcluirDiretor = async function(id) {
 
     // recebe o id do filme
-    let idAtor = id
-    let atorJSON = {}
+    let idDiretor = id
+    let diretorJSON = {}
 
     // validação para id vazio, indefinido ou nao numerico
-    if (idAtor == '' || idAtor == undefined || isNaN(idAtor)) {
+    if (idDiretor == '' || idDiretor == undefined || isNaN(idDiretor)) {
         return message.ERROR_INVALID_ID
     } else {
 
         // chama a função do dao para retornar dados no bd
-        let deletePorID = await atoresDAO.deleteAtor(idAtor)
+        let deletePorID = await diretoresDAO.deleteDiretor(idDiretor)
 
         // verifica se dados no servidor de banco foram processados
         if (deletePorID) {
@@ -133,8 +134,8 @@ const setExcluirAtor = async function(id) {
             // validação para veificar se existem dados a serem processados
             if (deletePorID.length > 0) {
                 // montando o json para retornar para o app
-                atorJSON.filmes = deletePorID
-                atorJSON.status_code = 500
+                diretorJSON.diretores = deletePorID
+                diretorJSON.status_code = 500
                 return message.ERROR_INTERNAL_SERVER
             } else {
                 return message.REQUEST_SUCCEEDED //400
@@ -146,29 +147,29 @@ const setExcluirAtor = async function(id) {
 
 }
 
-const getBuscarAtor = async function(id) {
+const getBuscarDiretor = async function(id) {
 
     // recebe o id do filme
-    let idAtor = id
-    let atorJSON = {}
+    let idDiretor = id
+    let diretorJSON = {}
 
     // validação para id vazio, indefinido ou nao numerico
-    if (idAtor == '' || idAtor == undefined || isNaN(idAtor)) {
+    if (idDiretor == '' || idDiretor == undefined || isNaN(idDiretor)) {
         return message.ERROR_INVALID_ID
     } else {
 
         // chama a função do dao para retornar dados no bd
-        let dadosAtoresPorID = await atoresDAO.selectByIdAtor(idAtor)
+        let dadosDiretoresPorID = await diretoresDAO.selectByIdDiretor(idDiretor)
 
         // verifica se dados no servidor de banco foram processados
-        if (dadosAtoresPorID) {
+        if (dadosDiretoresPorID) {
 
             // validaão para veificar se existem dados a serem processados
-            if (dadosAtoresPorID.length > 0) {
+            if (dadosDiretoresPorID.length > 0) {
                 // montando o json para retornar para o app
-                atorJSON.atores = dadosAtoresPorID
-                atorJSON.status_code = 200
-                return atorJSON //200
+                diretorJSON.diretores = dadosDiretoresPorID
+                diretorJSON.status_code = 200
+                return diretorJSON //200
             } else {
                 return message.ERROR_NOT_FOUND //400
             }
@@ -180,10 +181,10 @@ const getBuscarAtor = async function(id) {
 }
 
 module.exports = {
-    getListarAtores,
+    getListarDiretor,
 
-    setAtualizarAtor,
-    setInserirNovoAtor,
-    setExcluirAtor,
-    getBuscarAtor
+    setAtualizarDiretor,
+    setInserirNovoDiretor,
+    setExcluirDiretor,
+    getBuscarDiretor
 }

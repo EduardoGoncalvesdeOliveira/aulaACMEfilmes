@@ -20,6 +20,7 @@ const controllerFilmes = require('./controller/controller_filme.js')
 const controllerAtores = require('./controller/controller_ator.js')
 const controller_genero = require('./controller/controller_genero.js')
 const controllerClassificacao = require('./controller/controller_classificacao.js')
+const controller_diretor = require('./controller/controller_diretor.js')
 
 
 
@@ -163,10 +164,11 @@ app.post('/v2/acmefilmes/ator/', cors(), bodyParserJSON, async function(request,
     // 
     let contentType = request.headers['content-type']
 
-    console.log(contentType)
+
 
     // recebe os dados encaminhados na requisição do body (json)
     let dadosBody = request.body
+        // console.log(dadosBody)
 
     let resultDados = await controllerAtores.setInserirNovoAtor(dadosBody, contentType)
 
@@ -304,4 +306,53 @@ app.get('/v2/acme/classificacao/:id', cors(), async function(request, response, 
     let dadosNacionalidadeporID = await controllerClassificacao.getBuscarClassificacao(idNacionalidade);
     response.status(dadosNacionalidadeporID.status_code)
     response.json(dadosNacionalidadeporID)
+})
+
+// ------------------------------------------------------------------------------------------------
+
+// DIRETORES
+
+
+app.get('/v2/acme/diretores', cors(), async function(request, response, next) {
+
+    let dadosDiretores = await controller_diretor.getListarDiretor();
+    response.status(dadosDiretores.status_code)
+    response.json(dadosDiretores)
+})
+
+app.get('/v2/acme/diretores/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idDiretor = request.params.id
+
+    let dadosDiretoresPorID = await controller_diretor.getBuscarDiretor(idDiretor);
+    response.status(dadosDiretoresPorID.status_code)
+    response.json(dadosDiretoresPorID)
+})
+
+app.delete('/v3/acme/diretores/delete/:id', cors(), async function(request, response, next) {
+
+    // RECEBE A RRQUISIÇÃO DO ID
+    let idDiretor = request.params.id
+
+    let deletarDiretoresPorID = await controller_diretor.setExcluirDiretor(idDiretor);
+    response.status(deletarDiretoresPorID.status_code)
+    response.json(deletarDiretoresPorID)
+})
+
+app.post('/v2/acmefilmes/diretores/', cors(), bodyParserJSON, async function(request, response, next) {
+
+    // 
+    let contentType = request.headers['content-type']
+
+    console.log(contentType)
+
+    // recebe os dados encaminhados na requisição do body (json)
+    let dadosBody = request.body
+
+    let resultDados = await controller_diretor.setInserirNovoDiretor(dadosBody, contentType)
+
+    response.status(resultDados.status_code)
+    response.json(resultDados)
+
 })
